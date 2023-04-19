@@ -16,7 +16,6 @@ import (
 	"go/token"
 	"go/types"
 	"html/template"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -146,7 +145,7 @@ func main() {
 
 		outputName = filepath.Join(dir, strings.ToLower(baseName))
 	}
-	err := ioutil.WriteFile(outputName, src, 0o600)
+	err := os.WriteFile(outputName, src, 0o600)
 	if err != nil {
 		log.Fatalf("writing output: %s", err)
 	}
@@ -198,7 +197,7 @@ type Package struct {
 // parsePackage exits if there is an error.
 func (g *Generator) parsePackage(patterns []string, tags []string) {
 	cfg := &packages.Config{
-		// nolint: staticcheck
+		//nolint: staticcheck
 		Mode: packages.LoadSyntax,
 		// TODO: Need to think about constants in test files. Maybe write type_string_test.go
 		// in a separate pass? For later.
